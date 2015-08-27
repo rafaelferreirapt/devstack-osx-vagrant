@@ -1,0 +1,58 @@
+https://wiki.openstack.org/wiki/NeutronDevstack
+
+Para obter o os serviços que são precisos fazer enable:
+disable_service n-net
+enable_service q-svc
+enable_service q-agt
+enable_service q-dhcp
+enable_service q-l3
+enable_service q-meta
+# Optional, to enable tempest configuration as part of devstack
+enable_service tempest
+
+Com estes serviços, o enable feito temos o OpenStack com neutron.
+
+Agora é preciso configurar a network, na Vagrantfile temos uma private_network
+config.vm.network "private_network", ip: "172.18.161.6"
+
+com o endereço 172.18.161.6, este endereço é o que vamos usar como public_network para o neutron.
+
+Usando este tutorial: http://docs.openstack.org/developer/devstack/guides/neutron.html
+
+conseguimos entender a arquitectura da rede, o nosso devstack_laptop é a VM
+e o hadrware_network é a interface criada pela virtualbox que terá o endereço
+172.18.161.6 quando fizermos ifconfig. Depois temos de alterar a configuração
+do local.conf para a interface correta.
+PUBLIC_INTERFACE=eth1 <= interface no ifconfig
+
+sudo ip addr flush dev eth0
+caso a interface esteja com o endereço ip atribuido
+
+Permitir que as VMs consiguam conectar-se com o exterior:
+
+sudo iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+
+! to access from another host
+sudo echo 1 > /proc/sys/net/ipv4/ip_forward
+sudo echo 1 > /proc/sys/net/ipv4/conf/eth0/proxy_arp
+
+# see what interface is used for the ping
+ip route get 172.18.161.250
+
+================================
+** Testar a interface de admin**
+================================
+
+http://docs.openstack.org/admin-guide-cloud/index.html
+Interface do Openstack, projeto de administração, Access & Security e depois
+"Download OpenStack RC File", colocar na pasta partilhada para aceder apartir
+do ubuntu.
+
+Depois source file.rc
+
+http://docs.openstack.org/admin-guide-cloud/networking_use.html
+http://docs.openstack.org/user-guide/index.html
+
+keystone tenant-list | grep "demo"
+
+por exemplo, o id do projeto é: 619c603290d34916a5f176ad74fe52a9

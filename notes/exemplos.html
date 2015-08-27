@@ -1,0 +1,41 @@
+neutron net-create --tenant-id 619c603290d34916a5f176ad74fe52a9 net1
+Created a new network:
++---------------------------+--------------------------------------+
+| Field                     | Value                                |
++---------------------------+--------------------------------------+
+| admin_state_up            | True                                 |
+| id                        | 3a7002ea-6ea8-4dd7-b1bd-74b1eb9b31c9 |
+| mtu                       | 0                                    |
+| name                      | net1                                 |
+| port_security_enabled     | True                                 |
+| provider:network_type     | vxlan                                |
+| provider:physical_network |                                      |
+| provider:segmentation_id  | 1029                                 |
+| router:external           | False                                |
+| shared                    | False                                |
+| status                    | ACTIVE                               |
+| subnets                   |                                      |
+| tenant_id                 | 619c603290d34916a5f176ad74fe52a9     |
++---------------------------+--------------------------------------+
+
+criamos uma net privada para o projeto. agora vamos criar uma sub-net:
+neutron subnet-create net1 10.0.0.0/24 --tenant-id 619c603290d34916a5f176ad74fe52a9
+Created a new subnet:
++-------------------+--------------------------------------------+
+| Field             | Value                                      |
++-------------------+--------------------------------------------+
+| allocation_pools  | {"start": "10.0.0.2", "end": "10.0.0.254"} |
+| cidr              | 10.0.0.0/24                                |
+| dns_nameservers   |                                            |
+| enable_dhcp       | True                                       |
+| gateway_ip        | 10.0.0.1                                   |
+| host_routes       |                                            |
+| id                | 08c6faa2-7151-4684-8b10-cfbfd217a835       |
+| ip_version        | 4                                          |
+| ipv6_address_mode |                                            |
+| ipv6_ra_mode      |                                            |
+| name              |                                            |
+| network_id        | 3a7002ea-6ea8-4dd7-b1bd-74b1eb9b31c9       |
+| subnetpool_id     |                                            |
+| tenant_id         | 619c603290d34916a5f176ad74fe52a9           |
++-------------------+--------------------------------------------+
