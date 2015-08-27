@@ -17,6 +17,9 @@ config.vm.network "private_network", ip: "172.18.161.6"
 
 com o endereço 172.18.161.6, este endereço é o que vamos usar como public_network para o neutron.
 
+sudo route add -interface vboxnet6 -net 10.0.0.0/24 172.18.161.1
+sudo route -n delete 10.0.0.0/24 172.18.161.1
+
 Usando este tutorial: http://docs.openstack.org/developer/devstack/guides/neutron.html
 
 conseguimos entender a arquitectura da rede, o nosso devstack_laptop é a VM

@@ -2,5 +2,9 @@
 
 apt-get update
 apt-get install -y git
-cd /media/data
-git clone https://git.openstack.org/openstack-dev/devstack
+cd /vagrant
+rm -rf data
+mkdir data
+cd data
+git clone https://git.openstack.org/openstack-dev/devstack .
+cp ../local.conf .
